@@ -146,5 +146,22 @@ You can visually verify all database records (routes, CB, banking, pools) using 
 npx prisma studio
 ```
 
+### Screenshots & Sample Outputs
+1.Routes Tab
+<img width="1609" height="667" alt="image" src="https://github.com/user-attachments/assets/559af23a-ba7f-4006-8ad9-815863dc48d5" />
+
+2.Compare Tab
+<img width="1289" height="803" alt="image" src="https://github.com/user-attachments/assets/3d62d149-d531-4d45-8946-b400d80aa0bf" />
+
+3.Banking Tab
+<img width="1286" height="517" alt="image" src="https://github.com/user-attachments/assets/fb876c5a-a888-43bd-95b6-f78f66912807" />
+
+4.Pooling Tab
+<img width="1290" height="508" alt="image" src="https://github.com/user-attachments/assets/ab983f47-f367-4cfe-9fc6-c2088f46e96f" />
+
+
+
+
+
 
 
