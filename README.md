@@ -50,3 +50,11 @@ This project follows **Hexagonal Architecture (Ports & Adapters)** for modularit
 
 ✅ Benefits: Loose coupling, replaceable adapters, testable core logic, framework-independent domain.
 
+## 🚀 Backend Setup
+
+### 1. Clone the Repository
+```sh
+git clone https://github.com/<your-username>/fuel-eu-maritime-compliance.git
+cd fuel-eu-maritime-compliance/backend
+```
+
