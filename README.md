@@ -1,68 +1,52 @@
-Fuel EU Compliance Dashboard
-A full-stack application that calculates and manages Fuel EU compliance metrics for ships based on greenhouse gas (GHG) intensity and energy consumption data.
-It supports CB (Compliance Balance) computation, Banking of surplus credits, and Pooling among ships for compliance adjustment.
+# Fuel EU Compliance Dashboard
 
-Overview
-The Fuel EU Compliance Dashboard enables monitoring of maritime vessel emissions against the target GHG intensity defined by the Fuel EU regulation.
-It provides modules for:
+A full-stack web application that calculates and manages **Fuel EU compliance metrics** for ships based on greenhouse gas (GHG) intensity and energy consumption.  
+It supports:
 
-Calculating compliance balance (CB) per ship and year
-Banking surplus CB for future use
-Pooling ships to balance deficits with surpluses
-Persistent data storage in Neon PostgreSQL using Prisma ORM
-Core Formulas
-Target Intensity (2025): 89.3368 gCO₂e/MJ
-Energy in Scope (MJ): fuelConsumption × 41,000
-Compliance Balance: (Target − Actual) × Energy
-Positive CB → Surplus; Negative CB → Deficit
+- ✅ Compliance Balance (CB) calculation per ship and year  
+- ✅ Banking of surplus CB for future usage  
+- ✅ Pooling between ships to balance deficits with surpluses  
+- ✅ Persistent storage using Neon PostgreSQL + Prisma ORM  
 
-Architecture Summary (Haxagonal Structure)
-This project follows Hexagonal Architecture (Ports and Adapters) for modularity, separation of concerns, and testability.
+---
 
-Layers Overview
-Layer	Responsibility	Example
-Core Domain	Business entities and rules	Compliance, Route
-Application Layer	Use-cases and service logic	ComplianceService, PoolService
-Ports (Interfaces)	Define contracts between domain and infrastructure	ComplianceRepositoryPort
-Adapters (Implementations)	Connect domain logic to infrastructure like DB or APIs	CompliancePostgresAdapter
-Infrastructure	Database, web server, external APIs	Prisma + Express/TSX setup
-This design ensures:
+## 🔍 Overview
 
-Loose coupling between components
-Easy unit testing
-Domain logic independent of frameworks or databases
-Setup & Run Instructions
-1. Clone the Repository
-git clone https://github.com/your-username/fuel-eu-compliance.git
-cd fuel-eu-compliance/backend
-2. Install Dependencies
-npm install
-3. Configure Environment Variables
-Create a .env file in /backend directory
+The **Fuel EU Compliance Dashboard** enables monitoring of maritime vessel emissions against the target GHG intensity mandated by the FuelEU regulation.
 
-DATABASE_URL="postgresql://<user>:<password>@<neon-host>/<database>?sslmode=require"
-4. Apply Database Schema
-npx prisma migrate reset --force
-npx prisma generate
-5. Seed the Database
-npm run seed
-6. Run the Server
-npm run dev
-Server will start at http://localhost:5000
+The platform provides:
 
-How to Execute Tests
-You can test different modules via the frontend dashboard or directly through backend APIs.
+| Module | Purpose |
+|--------|---------|
+| **Compliance Calculation** | Computes CB (surplus/deficit) per ship per year |
+| **Banking** | Stores surplus CB for later usage |
+| **Pooling** | Allows multiple ships to redistribute surplus CB |
+| **Database-backed Storage** | Fully persistent via Neon PostgreSQL and Prisma |
 
-Functional Tests
-Banking
-Navigate to Banking tab.
-Enter Ship ID and Year.
-Click Load CB → Verify snapshot and adjusted CB.
-Use Bank to store surplus CB.
-Pooling
-Navigate to Pooling tab.
-Click Fetch Adjusted CBs → Displays all ships’ CBs for the selected year.
-Click Create & Allocate Pool → Redistributes surpluses among deficits.
-Check the CB After column or backend logs for allocations.
-Database Verification You can verify your data directly in the database using Prisma Studio:
-npx prisma studio
+---
+
+## 🧠 Core Compliance Formulas
+
+| Metric | Formula |
+|--------|---------|
+| **Target GHG Intensity (2025)** | `89.3368 gCO₂e / MJ` |
+| **Energy in Scope (MJ)** | `fuelConsumption × 41,000` |
+| **Compliance Balance (CB)** | `(Target − ActualIntensity) × EnergyInScope` |
+| **Interpretation** | Positive CB → Surplus, Negative CB → Deficit |
+
+---
+
+## 🏗️ Architecture Summary (Hexagonal)
+
+This project follows **Hexagonal Architecture (Ports & Adapters)** for modularity, testability, and decoupled logic.
+
+| Layer | Responsibility | Example Components |
+|--------|---------------|--------------------|
+| **Core Domain** | Business entities + invariants | `Route`, `Compliance` |
+| **Application Layer** | Use cases & business workflows | `ComplianceService`, `PoolService` |
+| **Ports (Interfaces)** | Defines boundary contracts | `ComplianceRepositoryPort` |
+| **Adapters (Implementations)** | Connects ports to DB, HTTP, UI | `CompliancePostgresAdapter` |
+| **Infrastructure** | Server, DB connection, framework config | `Express`, `Prisma`, `TSX` |
+
+✅ Benefits: Loose coupling, replaceable adapters, testable core logic, framework-independent domain.
+
