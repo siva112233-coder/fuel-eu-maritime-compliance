@@ -58,3 +58,37 @@ git clone https://github.com/<your-username>/fuel-eu-maritime-compliance.git
 cd fuel-eu-maritime-compliance/backend
 ```
 
+### 2.Install Dependencies
+```sh
+npm install
+```
+
+### 3.Configure Environment Variables
+   Create a .env file inside /backend:
+```sh
+DATABASE_URL="postgresql://<user>:<password>@<neon-host>/<db>?sslmode=require"
+```
+### 4.Apply Database Schema
+
+```sh
+npx prisma migrate reset --force
+npx prisma generate
+```
+
+### 5.Seed the Database
+
+```sh
+npm run seed
+```
+(or if running script directly)
+```sh
+npx tsx seed/seed.ts
+```
+
+### 6. Start the Backend Server
+```sh
+npm run dev
+```
+Server will start at http://localhost:5000
+
+
