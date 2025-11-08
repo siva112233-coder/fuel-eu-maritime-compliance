@@ -89,15 +89,13 @@ npx tsx seed/seed.ts
 ```sh
 npm run dev
 ```
-Server will start at http://localhost:5000
+✅ Server will start at http://localhost:5000
 
 
 
 
 ### ✅ Here is the **Frontend Setup Section** in the same format:
 
-```md
-## 💻 Frontend Setup
 
 ### 1. Navigate to Frontend Directory
 ```sh
@@ -115,6 +113,38 @@ npm run dev
 ```
 
 ✅ App runs at: http://localhost:5173
+
+### How to Execute Tests
+
+You can test different modules via the frontend dashboard or directly through backend APIs.
+
+## 🧪 Functional Tests
+
+### 1. Banking
+
+- Navigate to the **Banking** tab.
+- Enter **Ship ID** and **Year**.
+- Click **Load CB** → View current Compliance Balance (CB) and adjustment preview.
+- Click **Bank** → Stores surplus CB into the banking ledger.
+
+---
+
+### 2. Pooling
+
+- Navigate to the **Pooling** tab.
+- Click **Fetch Adjusted CBs** → Loads all ships’ CB values for the selected year.
+- Click **Create & Allocate Pool** → Automatically redistributes surplus among deficit ships.
+- Verify results in the **CB After** column OR check backend logs.
+
+---
+
+### 3. Database Verification
+
+You can visually verify all database records (routes, CB, banking, pools) using Prisma Studio:
+
+```sh
+npx prisma studio
+```
 
 
 
