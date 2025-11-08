@@ -92,3 +92,16 @@ npm run dev
 Server will start at http://localhost:5000
 
 
+
+
+### ✅ Here is the **Frontend Setup Section** in the same format:
+
+```md
+## 💻 Frontend Setup
+
+### 1. Navigate to Frontend Directory
+```sh
+cd ../frontend
+
+
+
