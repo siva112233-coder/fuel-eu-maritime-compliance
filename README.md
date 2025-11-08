@@ -1,43 +1,68 @@
-# 🚢 Fuel EU Maritime — Compliance Dashboard
+Fuel EU Compliance Dashboard
+A full-stack application that calculates and manages Fuel EU compliance metrics for ships based on greenhouse gas (GHG) intensity and energy consumption data.
+It supports CB (Compliance Balance) computation, Banking of surplus credits, and Pooling among ships for compliance adjustment.
 
-A full-stack web application that calculates, tracks, and manages **Fuel EU Compliance** metrics for maritime vessels based on GHG intensity and energy consumption.  
-It includes functionality for:
+Overview
+The Fuel EU Compliance Dashboard enables monitoring of maritime vessel emissions against the target GHG intensity defined by the Fuel EU regulation.
+It provides modules for:
 
-- ✅ Compliance Balance (CB) calculation  
-- ✅ Banking surplus credits across years  
-- ✅ Pooling ships to offset deficits  
-- ✅ Route baseline comparison and emissions monitoring  
+Calculating compliance balance (CB) per ship and year
+Banking surplus CB for future use
+Pooling ships to balance deficits with surpluses
+Persistent data storage in Neon PostgreSQL using Prisma ORM
+Core Formulas
+Target Intensity (2025): 89.3368 gCO₂e/MJ
+Energy in Scope (MJ): fuelConsumption × 41,000
+Compliance Balance: (Target − Actual) × Energy
+Positive CB → Surplus; Negative CB → Deficit
 
-The platform follows **Hexagonal Architecture (Ports & Adapters)** on both frontend and backend, ensuring clean separation of concerns, testability, and maintainability.
+Architecture Summary (Haxagonal Structure)
+This project follows Hexagonal Architecture (Ports and Adapters) for modularity, separation of concerns, and testability.
 
----
+Layers Overview
+Layer	Responsibility	Example
+Core Domain	Business entities and rules	Compliance, Route
+Application Layer	Use-cases and service logic	ComplianceService, PoolService
+Ports (Interfaces)	Define contracts between domain and infrastructure	ComplianceRepositoryPort
+Adapters (Implementations)	Connect domain logic to infrastructure like DB or APIs	CompliancePostgresAdapter
+Infrastructure	Database, web server, external APIs	Prisma + Express/TSX setup
+This design ensures:
 
-## 📌 Features
+Loose coupling between components
+Easy unit testing
+Domain logic independent of frameworks or databases
+Setup & Run Instructions
+1. Clone the Repository
+git clone https://github.com/your-username/fuel-eu-compliance.git
+cd fuel-eu-compliance/backend
+2. Install Dependencies
+npm install
+3. Configure Environment Variables
+Create a .env file in /backend directory
 
-| Module | Description |
-|--------|-------------|
-| **Routes** | View all registered routes, set baseline, filter data |
-| **Compare** | Compare baseline vs other ships, % difference, compliance flag |
-| **Banking** | Store surplus CB and apply it to cover deficits |
-| **Pooling** | Group ships into a pool to redistribute surplus/deficits |
-| **Database** | Backed by Neon PostgreSQL + Prisma ORM |
-| **UI** | React + TypeScript + TailwindCSS dashboard |
+DATABASE_URL="postgresql://<user>:<password>@<neon-host>/<database>?sslmode=require"
+4. Apply Database Schema
+npx prisma migrate reset --force
+npx prisma generate
+5. Seed the Database
+npm run seed
+6. Run the Server
+npm run dev
+Server will start at http://localhost:5000
 
----
+How to Execute Tests
+You can test different modules via the frontend dashboard or directly through backend APIs.
 
-## 🧠 Core Compliance Formula
-
-| Metric | Formula |
-|--------|---------|
-| **Target GHG Intensity (2025)** | `89.3368 gCO₂e/MJ` |
-| **Energy in Scope (MJ)** | `fuelConsumption (t) × 41,000` |
-| **Compliance Balance (CB)** | `(Target − ActualGHG) × EnergyInScope` |
-| **Positive CB** | ✅ Surplus credits |
-| **Negative CB** | ❌ Deficit — must bank or pool to comply |
-
----
-
-## 🏗️ Architecture Summary — Hexagonal Structure
-
-The application is built using **Ports & Adapters / Hexagonal Architecture**:
-
+Functional Tests
+Banking
+Navigate to Banking tab.
+Enter Ship ID and Year.
+Click Load CB → Verify snapshot and adjusted CB.
+Use Bank to store surplus CB.
+Pooling
+Navigate to Pooling tab.
+Click Fetch Adjusted CBs → Displays all ships’ CBs for the selected year.
+Click Create & Allocate Pool → Redistributes surpluses among deficits.
+Check the CB After column or backend logs for allocations.
+Database Verification You can verify your data directly in the database using Prisma Studio:
+npx prisma studio
