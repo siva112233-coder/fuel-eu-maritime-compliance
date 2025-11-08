@@ -102,6 +102,19 @@ Server will start at http://localhost:5000
 ### 1. Navigate to Frontend Directory
 ```sh
 cd ../frontend
+```
+
+### 2.Install Dependencies
+```sh
+npm install
+```
+
+### 3. Start Frontend App
+```sh
+npm run dev
+```
+
+✅ App runs at: http://localhost:5173
 
 
 
